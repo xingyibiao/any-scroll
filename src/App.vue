@@ -1,29 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <Scroll :content="list">
+      <template slot-scope="{ data }">
+        <div
+          class="container--item"
+          v-for="item in data"
+          :key="item">{{ item }}</div>
+      </template>
+    </Scroll>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import Scroll from './components/scroll.vue';
 
 @Component({
   components: {
-    HelloWorld,
+    Scroll,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  public list: number[] = [];
+
+  created() {
+    let i: number;
+    for (i = 0; i < 100000; i += 1) {
+      this.list.push(i);
+    }
+  }
+}
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
